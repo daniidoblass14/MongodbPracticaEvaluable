@@ -26,6 +26,7 @@ public class Ejercicio07 {
             list.add("primer plato");
             list.add("segundo plato");
             consulta.put("tipo",new BasicDBObject("$in",list));
+
             consulta.put("$and",obj);
 
             //Ejecución de la consulta.
