@@ -9,8 +9,20 @@ import org.bson.Document;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Clase donde encontramos el ejercicio numero de 4.B de la PEVAL
+ *
+ * @version 1.0 (28/01/2023)
+ * @author Daniel Jesús Doblas Florido.
+ */
+
 public class Ejercicio05 {
 
+    /**
+     * Metodo para obtener el nombre y el tiempo de elaboracion de las recetas,
+     * que en los ingrdeintes contengan huevos y tengan mas de 500 calorias.
+     * @param col -tipo MongoCollection- para saber sobre que coleccion trabajamos.
+     */
     public void obtenerRecetesHuevosCalorias(MongoCollection col){
 
         //Preparacion de la consulta.
@@ -27,22 +39,16 @@ public class Ejercicio05 {
         //Visualizacion de la consulta.
         MongoCursor<Document> cursor = resultDocument.cursor();
 
+        //Bucle para imprimir los datos solicitados por la PEVAL.
+        System.out.print("\n");
+        System.out.println("------------------");
         while (cursor.hasNext()){
             Document miDocument = (Document) cursor.next();
             List<Document> listaIngredientes =  miDocument.getList("ingredientes",Document.class);
 
             System.out.println(miDocument.get("nombre")+" Calorias: "+miDocument.get("calorias"));
-            System.out.println("/--INGREDIENTES--/");
-
-            for(int i = 0;i< listaIngredientes.size();i++){
-
-                System.out.println("Nombre: "+listaIngredientes.get(i).get("nombre")+"\n Cantidad: "+listaIngredientes.get(i).get("cantidad")+
-                        "\n Unidad: "+listaIngredientes.get(i).get("unidades"));
-                System.out.println("----------------------");
-            }
-            System.out.println("/--FIN INGREDIENTES--/");
-            System.out.println("\n");
         }
-
+        System.out.println("------------------");
+        System.out.print("\n");
     }
 }
