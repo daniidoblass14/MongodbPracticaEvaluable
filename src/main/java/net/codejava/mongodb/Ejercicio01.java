@@ -8,33 +8,77 @@ import java.util.Arrays;
 import java.util.Scanner;
 
 public class Ejercicio01 {
-
+    /**
+     * tipo - tipo ArrayList<String> - para almacenar los tipos de que puede ser la nueva receta
+     */
     private ArrayList<String> tipo = new ArrayList<>();
+    /**
+     * ingredientes - tipo ArrayList<Document> - para almacenar los ingredientes que puede tener la nueva receta
+     */
     private ArrayList<Document> ingredientes = new ArrayList<>();
+    /**
+     * pasos - tipo ArrayList<Document> - para almacenar los pasos que puede tener la nueva receta
+     */
     private ArrayList<Document> pasos = new ArrayList<>();
+    /**
+     * tipo - tipo boolean - para salir del bucle cuando no quiera introducirle mas tipos a la receta.
+     */
     private static boolean condicion = true;
+    /**
+     * respuesta - tipo String - para almacenar la respuesta del usuario.
+     */
     private String respuesta;
+    /**
+     * cantidad - tipo int - para almacenar la cantidad tanto de pasos, como de ingredientes.
+     */
     private int cantidad;
+    /**
+     * dificultad - tipo String - para almacenar la dificultad que puede tener la nueva receta
+     */
     private String dificultad;
+    /**
+     * nombre - tipo String - para almacenar el nombre que puede tener la nueva receta
+     */
     private String nombre;
+    /**
+     * electrodomestico - tipo String - para almacenar el electrodomestico que puede tener la nueva receta
+     */
     private String electrodomestico;
-
+    /**
+     * valorTiempo - tipo int - para almacenar el valor del tiempo que pueda tener la nueva receta
+     */
     private int valorTiempo;
+    /**
+     * unidadTiempo - tipo String - para almacenar la unidad de tiempo que puede tener la nueva receta
+     */
     private String unidadTiempo;
-
+    /**
+     * calorias - tipo int - para almacenar las calorias que puede tener la nueva receta
+     */
     private int calorias;
+
+    /**
+     * Método para insertar la nueva receta
+     * @param col - tipo MongoCollection - nos proporciona la coleccion sobre la que estamos trabajando.
+     */
 
     public void insertar(MongoCollection col){
 
-        Scanner sc = new Scanner(System.in);
-        Scanner scInt = new Scanner(System.in);
+        Scanner sc = new Scanner(System.in); // Scanner utilizado para los STRING'S.
+
+        Scanner scInt = new Scanner(System.in); // Scanner utilizado para los INT'S.
 
         System.out.println("Introduzca el tipo de su receta: ");
         tipo.add(sc.nextLine());
 
+        /**
+         * Bucle que utilizamos para saber si el usuario quiere introducirle más de un tipo
+         * a la receta mediante una pregunta, y según su respuesta de SI o NO le podrás introducir
+         * más o no.
+         */
         while(condicion){
 
-            System.out.println("Quiere añadirle otro tipo a su receta?");
+            System.out.println("Quiere añadirle otro tipo a su receta? [SI o NO]");
             respuesta = sc.nextLine();
             respuesta.toLowerCase();
 
@@ -46,6 +90,8 @@ public class Ejercicio01 {
             }else if(respuesta.equals("no")){
 
                 condicion = false;
+            }else {
+                System.out.println("Esa respuesta no es válida.");
             }
         }
         System.out.println("La dificultad de su receta puede ser ['Facil','Media','Dificil'], Indique cual es la suya: ");
@@ -57,6 +103,13 @@ public class Ejercicio01 {
         System.out.println("Introduzca la cantidad de ingredientes necesita: ");
         cantidad = scInt.nextInt();
 
+        /**
+         * Bucle que se repetira tanta veces como hayas introducido anteriormente.
+         * En el cual cada vez que demos una vuelta crearemos un nuevo documento de ingredientes,
+         * (Esto debbido a que en la BBDD los ingredientes son un OBJ JSON ) una vez introducidos
+         * sus parámetros añadimos este documento al arrayList de tipo document de ingredientes (Por qué,
+         * en la BBDD aparace como un array de objetos.
+         */
         for (int i = 0; i<cantidad;i++){
 
             Document newIngredientes = new Document();
@@ -80,6 +133,9 @@ public class Ejercicio01 {
         System.out.println("Introduzca la cantidad de paso que hay que realizar: ");
         cantidad = scInt.nextInt();
 
+        /**
+         * Mismo caso que con los ingredientes.
+         */
         for (int i = 0; i<cantidad;i++){
 
             Document newPaso = new Document();
@@ -104,9 +160,6 @@ public class Ejercicio01 {
 
 
         Document miDocumento = new Document();
-        Document documentoIngredientes = new Document();
-        ArrayList<Document> objetosIngredientes = new ArrayList<>();
-        Document documentoPasos = new Document();
         Document documentoTiempo = new Document();
         documentoTiempo.append("valor",valorTiempo);
         documentoTiempo.append("unidad",unidadTiempo);
